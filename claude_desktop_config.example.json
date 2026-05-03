@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "deals": {
+      "command": "npx",
+      "args": ["-y", "@intent-driven/mcp-server"],
+      "env": {
+        "IDF_SERVER": "http://localhost:3001",
+        "IDF_DOMAIN": "deals",
+        "IDF_ONTOLOGY_PATH": "/ABSOLUTE/PATH/TO/fold-runtime-quickstart/domain"
+      }
+    }
+  }
+}

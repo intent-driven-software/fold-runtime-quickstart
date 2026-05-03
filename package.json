@@ -1,0 +1,16 @@
+{
+  "name": "fold-runtime-quickstart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stop giving AI agents API keys. Give them a domain. Quickstart: Claude Desktop talks to a real declarative IDF runtime in 5 minutes.",
+  "type": "module",
+  "scripts": {
+    "bootstrap": "node scripts/bootstrap-invest.mjs",
+    "show-description": "node scripts/show-description.mjs",
+    "demo:rogue": "node scripts/demo-rogue-agent.mjs",
+    "demo:smart": "node scripts/demo-smart-agent.mjs"
+  },
+  "dependencies": {
+    "@intent-driven/mcp-server": "^0.1.0"
+  }
+}
