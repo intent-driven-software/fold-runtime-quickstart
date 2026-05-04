@@ -15,6 +15,13 @@ JSON-RPC rejection that the LLM can actually reason about.
 → Landing & full narrative: **[fold.intent-design.tech](https://fold.intent-design.tech)**
 → MCP-server source: **[@intent-driven/mcp-server](https://github.com/intent-driven-software/idf-mcp)**
 
+### 75-second walkthrough
+
+[![Watch the demo on Loom](https://cdn.loom.com/sessions/thumbnails/2ca4a40e3b9245feb86a74a998e42cb8-with-play.gif)](https://www.loom.com/share/2ca4a40e3b9245feb86a74a998e42cb8)
+
+→ **[Watch on Loom →](https://www.loom.com/share/2ca4a40e3b9245feb86a74a998e42cb8)**
+&nbsp;&nbsp;Three real scripts. Real HTTP. Verbatim terminal output.
+
 ---
 
 ## Why this exists
