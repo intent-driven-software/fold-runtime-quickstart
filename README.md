@@ -1,5 +1,9 @@
 # Fold Runtime — Quickstart
 
+[![npm version](https://img.shields.io/npm/v/@intent-driven/mcp-server.svg?label=%40intent-driven%2Fmcp-server)](https://www.npmjs.com/package/@intent-driven/mcp-server)
+[![idf-mcp CI](https://github.com/DubovskiyIM/idf-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/DubovskiyIM/idf-mcp/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 **Stop giving AI agents API keys. Give them a domain.**
 
 This repo is a 5-minute demo: real Claude / GPT / Gemini agent talking to
@@ -7,6 +11,8 @@ a real declarative IDF domain. No mocks. No code-generated boilerplate.
 You'll watch one agent **try to wire $50,000** to a wallet — and another
 agent, in the same domain, **decline to**, all the way down to a structured
 JSON-RPC rejection that the LLM can actually reason about.
+
+> **75-second video walkthrough** *(link added at v1.0.0 launch)*
 
 ---
 
@@ -174,7 +180,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
       "env": {
         "IDF_SERVER": "http://localhost:3001",
         "IDF_DOMAIN": "invest",
-        "IDF_ONTOLOGY_PATH": "/ABSOLUTE/PATH/TO/idf/src/domains/invest"
+        "IDF_ONTOLOGY_PATH": "/Users/YOU/WebstormProjects/idf/src/domains/invest"
       }
     }
   }

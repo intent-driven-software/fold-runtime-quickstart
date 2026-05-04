@@ -1,12 +1,13 @@
 {
   "mcpServers": {
-    "deals": {
+    "invest": {
       "command": "npx",
       "args": ["-y", "@intent-driven/mcp-server"],
       "env": {
         "IDF_SERVER": "http://localhost:3001",
-        "IDF_DOMAIN": "deals",
-        "IDF_ONTOLOGY_PATH": "/ABSOLUTE/PATH/TO/fold-runtime-quickstart/domain"
+        "IDF_DOMAIN": "invest",
+        "IDF_ONTOLOGY_PATH": "/Users/YOU/WebstormProjects/idf/src/domains/invest",
+        "IDF_AGENT_EMAIL": "claude@local"
       }
     }
   }
