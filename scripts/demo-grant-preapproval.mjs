@@ -97,8 +97,9 @@ if (res.ok || res.status === 201) {
   This is one effect in Φ. Once confirmed, the AgentPreapproval row
   is visible to preapprovalGuard and to the agent's own /world view.
 
-  Now run:  node scripts/demo-smart-agent.mjs
+  Next, see Act 3:
+    npm run demo:smart
   → the agent will read this preapproval and scale its trade down
-    from the rejected $50,000 to a permitted $999.
+    from the rejected $50,000 to a permitted $950.
 `);
 }

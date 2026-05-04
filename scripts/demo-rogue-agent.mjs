@@ -91,6 +91,8 @@ console.log(`
   One declaration in ontology.roles.agent.preapproval — and every
   intent in \`requiredFor\` is automatically guarded.
 
-  Now run:  node scripts/demo-smart-agent.mjs
-  to see what a Fold-aware agent does with this rejection.
+  Next, see Act 2 — investor issues a limited preapproval:
+    npm run demo:grant
+  Then Act 3 — a Fold-aware agent reads the cap and adapts:
+    npm run demo:smart
 `);
