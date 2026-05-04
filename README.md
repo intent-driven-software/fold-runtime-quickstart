@@ -1,7 +1,7 @@
 # Fold Runtime — Quickstart
 
 [![npm version](https://img.shields.io/npm/v/@intent-driven/mcp-server.svg?label=%40intent-driven%2Fmcp-server)](https://www.npmjs.com/package/@intent-driven/mcp-server)
-[![idf-mcp CI](https://github.com/DubovskiyIM/idf-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/DubovskiyIM/idf-mcp/actions/workflows/ci.yml)
+[![idf-mcp CI](https://github.com/intent-driven-software/idf-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/intent-driven-software/idf-mcp/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Stop giving AI agents API keys. Give them a domain.**
@@ -13,7 +13,7 @@ in the same domain, **decline to**, all the way down to a structured
 JSON-RPC rejection that the LLM can actually reason about.
 
 → Landing & full narrative: **[fold.intent-design.tech](https://fold.intent-design.tech)**
-→ MCP-server source: **[@intent-driven/mcp-server](https://github.com/DubovskiyIM/idf-mcp)**
+→ MCP-server source: **[@intent-driven/mcp-server](https://github.com/intent-driven-software/idf-mcp)**
 
 ---
 
@@ -58,7 +58,7 @@ demo domain on first start.
 ### Run
 
 ```bash
-git clone https://github.com/DubovskiyIM/fold-runtime-quickstart
+git clone https://github.com/intent-driven-software/fold-runtime-quickstart
 cd fold-runtime-quickstart
 
 # Terminal 1 — start the runtime (first run takes ~3 min to build the image)
@@ -290,7 +290,7 @@ you want to ship Fold for your own product.
 ## Where to go next
 
 - **Source of truth:** [github.com/DubovskiyIM/idf](https://github.com/DubovskiyIM/idf) — host runtime + 17 reference domains
-- **MCP server package:** [github.com/DubovskiyIM/idf-mcp](https://github.com/DubovskiyIM/idf-mcp) — `@intent-driven/mcp-server` on npm
+- **MCP server package:** [github.com/intent-driven-software/idf-mcp](https://github.com/intent-driven-software/idf-mcp) — `@intent-driven/mcp-server` on npm
 - **Landing:** [fold.intent-design.tech](https://fold.intent-design.tech)
 
 ---

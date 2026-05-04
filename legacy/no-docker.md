@@ -29,7 +29,7 @@ npm run server   # → http://localhost:3001 — keep this running
 In a second terminal:
 
 ```bash
-git clone https://github.com/DubovskiyIM/fold-runtime-quickstart ~/projects/fold-runtime-quickstart
+git clone https://github.com/intent-driven-software/fold-runtime-quickstart ~/projects/fold-runtime-quickstart
 cd ~/projects/fold-runtime-quickstart
 npm install
 IDF_REPO=~/projects/idf npm run bootstrap   # POSTs ontology + intents to localhost:3001
@@ -84,5 +84,5 @@ in the Claude Desktop config. The Docker version is two commands and
 no paths.
 
 If you're reading this because the Docker version had a problem, please
-[open an issue](https://github.com/DubovskiyIM/fold-runtime-quickstart/issues)
+[open an issue](https://github.com/intent-driven-software/fold-runtime-quickstart/issues)
 — we'd rather fix the Docker path than have people stuck on this one.
