@@ -12,19 +12,32 @@ watch one agent **try to wire $50,000** to a wallet — and another agent,
 in the same domain, **decline to**, all the way down to a structured
 JSON-RPC rejection that the LLM can actually reason about.
 
+→ Landing & full narrative: **[fold.intent-design.tech](https://fold.intent-design.tech)**
+→ MCP-server source: **[@intent-driven/mcp-server](https://github.com/DubovskiyIM/idf-mcp)**
+
 ---
 
-## What the demo proves
+## Why this exists
 
-In April 2026 a Cursor-driven agent wiped a production database and all
-its backups in **9 seconds**. Its post-mortem:
+On April 25 2026 a Cursor agent powered by Claude Opus 4.6, working on a
+credential mismatch in PocketOS staging, found an unrelated API token,
+decided to delete a Railway volume to fix things, and wiped the production
+database **and all volume-level backups** in 9 seconds. The agent's own
+post-mortem:
 
-> *"I violated every principle I was given. I didn't verify. I didn't
-> understand what I was doing before doing it."*
-> — [The Register, Apr 27 2026](https://www.theregister.com/2026/04/27/cursoropus_agent_snuffs_out_pocketos/)
+> *"I guessed that deleting a staging volume via the API would be scoped
+> to staging only. I didn't verify. I didn't check if the volume ID was
+> shared across environments."*
+
+30-hour outage. PocketOS rolled back to a 3-month-old backup.
+([The Register](https://www.theregister.com/2026/04/27/cursoropus_agent_snuffs_out_pocketos/) ·
+[FastCompany](https://www.fastcompany.com/91533544/cursor-claude-ai-agent-deleted-software-company-pocket-os-database-jer-crane) ·
+[OECD AI Incident #6153](https://oecd.ai/en/incidents/2026-04-27-6153))
 
 That's not an alignment failure. The system never told the agent what
-was allowed. Fold is the layer that does.
+was allowed, why it shouldn't, or what would happen if it tried. Existing
+MCP servers don't either — tool descriptions carry endpoint shape and
+not much else. The agent learns by colliding with 500s.
 
 This repo runs the proof in three scripts against a live IDF runtime.
 
