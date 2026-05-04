@@ -6,7 +6,7 @@
       "env": {
         "IDF_SERVER": "http://localhost:3001",
         "IDF_DOMAIN": "invest",
-        "IDF_ONTOLOGY_PATH": "/Users/YOU/WebstormProjects/idf/src/domains/invest",
+        "IDF_BOOTSTRAP": "0",
         "IDF_AGENT_EMAIL": "claude@local"
       }
     }

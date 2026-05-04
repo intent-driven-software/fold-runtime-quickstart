@@ -1,0 +1,35 @@
+# Quickstart compose: один сервис idf-host с заранее bootstrap'нутым
+# invest-доменом. После `docker compose up` (~30 сек после билда):
+#
+#   curl http://localhost:3001/api/agent/invest/schema
+#   npm run demo:rogue
+#   npm run demo:grant
+#   npm run demo:smart
+#
+# IDF_REPO env var больше не нужен — bootstrap происходит внутри
+# контейнера entrypoint'ом.
+
+services:
+  idf-host:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Pin к конкретному коммиту, если нужна стабильность:
+        #   docker compose build --build-arg IDF_REF=<sha>
+        IDF_REF: main
+    image: fold-runtime-quickstart:local
+    container_name: fold-host
+    ports:
+      # Override via:  HOST_PORT=3199 docker compose up
+      - "${HOST_PORT:-3001}:3001"
+    environment:
+      - PORT=3001
+      - BOOTSTRAP_DOMAIN=invest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3001/api/effects"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
