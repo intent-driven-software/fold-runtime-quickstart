@@ -18,7 +18,9 @@ services:
         # Pin к конкретному коммиту, если нужна стабильность:
         #   docker compose build --build-arg IDF_REF=<sha>
         IDF_REF: main
-    image: fold-runtime-quickstart:local
+    # `image:` намеренно не указан — это заставит compose сразу
+    # использовать build вместо попытки pull'нуть несуществующий
+    # образ из registry (и видеть `pull access denied` в логах).
     container_name: fold-host
     ports:
       # Override via:  HOST_PORT=3199 docker compose up
