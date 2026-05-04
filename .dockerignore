@@ -1,0 +1,11 @@
+.git
+.gitignore
+.idea
+node_modules
+README.md
+LICENSE
+CHANGELOG.md
+docker-compose.yml
+launch
+.DS_Store
+*.log
