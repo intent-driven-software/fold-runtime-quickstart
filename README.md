@@ -48,6 +48,20 @@ not much else. The agent learns by colliding with 500s.
 
 This repo runs the proof in three scripts against a live IDF runtime.
 
+**Who this is for.** You're the engineer at a 5–30-person team putting
+an AI agent into production this quarter — on top of a real backend,
+with real customers, real SOC2 review on the horizon. You don't want a
+guardrail layer that reviews after the fact. You want the system itself
+to refuse the wrong action — before the call, with a structured reason
+the agent can read.
+
+**How it plugs in.** Fold is a sibling service over an HTTP API the
+runtime exposes from your IDF artifact — not middleware in your existing
+app, not codegen at runtime. Your current backend stays where it is; the
+IDF artifact *describes* the agent-facing surface, and the runtime serves
+it on its own port. The MCP server is a stdio adapter Claude Desktop /
+Cursor / Zed connect to.
+
 ---
 
 ## Quickstart — 2 commands
@@ -283,9 +297,28 @@ preapproval guards, and irreversibility primitives.
 
 This quickstart runs a pre-built domain (`invest`). If you want to
 declare **your own** entities / intents / invariants and have Fold serve
-them, that's a different project — the IDF SDK:
+them, that's a different project — the IDF SDK.
 
-- [`@intent-driven/cli`](https://www.npmjs.com/package/@intent-driven/cli) — `idf init`, `idf import postgres|openapi|prisma`, `idf enrich`
+### How long does it take?
+
+Three reference points from the public IDF host runtime:
+
+| Domain      | Shape                                                          | Time                                |
+|-------------|----------------------------------------------------------------|-------------------------------------|
+| `invest`    | 14 entities · 61 intents · 5 invariants · ~600 lines           | a weekend, hand-written             |
+| `gravitino` | 253 entities (Apache catalog OpenAPI) · 120 intents            | imported in <1h, enriched in 2 days |
+| `workflow`  | 9 entities · 47 intents · timer queue · cascade rules          | a day                               |
+
+The speed comes from importers — you don't write 253 entities by hand.
+
+### Tooling
+
+- [`@intent-driven/cli`](https://www.npmjs.com/package/@intent-driven/cli):
+  - `idf init` — bootstrap an empty domain
+  - `idf import postgres` — reads your live schema, generates entity baseline
+  - `idf import openapi` — reads your API spec, generates intents and references (this is the 253-entity path)
+  - `idf import prisma` — same for ORM-driven backends
+  - `idf enrich` — LLM pass to fill labels, field roles, suggested preapproval predicates
 - [`docs/ontology-authoring-checklist.md`](https://github.com/DubovskiyIM/idf-sdk/blob/main/docs/ontology-authoring-checklist.md) — 12-point checklist for first ontology
 - [Manifesto v2](https://github.com/DubovskiyIM/idf/blob/main/docs/manifesto-v2.md) — full format spec
 
