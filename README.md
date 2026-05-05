@@ -320,7 +320,7 @@ The speed comes from importers — you don't write 253 entities by hand.
   - `idf import prisma` — same for ORM-driven backends
   - `idf enrich` — LLM pass to fill labels, field roles, suggested preapproval predicates
 - [`docs/ontology-authoring-checklist.md`](https://github.com/DubovskiyIM/idf-sdk/blob/main/docs/ontology-authoring-checklist.md) — 12-point checklist for first ontology
-- [Manifesto v2](https://github.com/DubovskiyIM/idf/blob/main/docs/manifesto-v2.md) — full format spec
+- [Why a runtime layer](https://fold.intent-design.tech/paper/why-runtime-layer/) — ~1800-word essay on the agent-safety class question this answers
 
 The quickstart deliberately doesn't cover authoring — start there if
 you want to ship Fold for your own product.
