@@ -1,11 +1,11 @@
 {
   "mcpServers": {
-    "invest": {
+    "procurement": {
       "command": "npx",
       "args": ["-y", "@intent-driven/mcp-server"],
       "env": {
         "IDF_SERVER": "http://localhost:3001",
-        "IDF_DOMAIN": "invest",
+        "IDF_DOMAIN": "procurement",
         "IDF_BOOTSTRAP": "0",
         "IDF_AGENT_EMAIL": "claude@local"
       }

@@ -8,9 +8,11 @@
 
 Two-command quickstart: real Claude / GPT / Gemini agent talking to a real
 declarative IDF domain. No mocks. No code-generated boilerplate. You'll
-watch one agent **try to wire $50,000** to a wallet — and another agent,
-in the same domain, **decline to**, all the way down to a structured
-JSON-RPC rejection that the LLM can actually reason about.
+watch one agent **try to commit a $3,500 MacBook Pro** to a corporate
+budget without authorization — and another agent, in the same domain,
+**read a $2,500 cap and downsize to a $2,400 MacBook Air**, all the way
+down to a structured JSON-RPC rejection that the LLM can actually reason
+about.
 
 → Landing & full narrative: **[fold.intent-design.tech](https://fold.intent-design.tech)**
 → MCP-server source: **[@intent-driven/mcp-server](https://github.com/intent-driven-software/idf-mcp)**
@@ -73,7 +75,7 @@ Cursor / Zed connect to.
 
 That's it. You do **not** need to clone the IDF host separately, install
 its dependencies, set absolute paths, or remember which terminal is
-which. The Docker image bundles the host and bootstraps the `invest`
+which. The Docker image bundles the host and bootstraps the `procurement`
 demo domain on first start.
 
 ### Run
@@ -87,10 +89,18 @@ docker compose up
 
 # Terminal 2 — run the demo
 npm install
-npm run demo:rogue   # Act 1: agent tries $50,000 — gets HTTP 403 with structured rejection
-npm run demo:grant   # Act 2: investor issues $1,000-cap preapproval (one declarative effect)
-npm run demo:smart   # Act 3: agent reads the cap, scales the order, executes 200 OK
+npm run demo:rogue   # Act 1: agent tries $3,500 MacBook Pro — gets HTTP 403 with structured rejection
+npm run demo:grant   # Act 2: requester issues $2,500-cap preapproval (one declarative effect)
+npm run demo:smart   # Act 3: agent reads the cap, downsizes to $2,400 MacBook Air, gets 200 OK
+                     #         + bonus: same preapproval rejects a $25,000 server with maxAmount check
 ```
+
+> **Want the original invest (trading) demo instead?** It's preserved as
+> a secondary scenario:
+> ```bash
+> # In a separate `docker compose` with BOOTSTRAP_DOMAIN=invest, then:
+> npm run demo:legacy:rogue && npm run demo:legacy:grant && npm run demo:legacy:smart
+> ```
 
 When you're done: <kbd>Ctrl-C</kbd> in terminal 1, then `docker compose down`.
 
@@ -100,14 +110,14 @@ When you're done: <kbd>Ctrl-C</kbd> in terminal 1, then `docker compose down`.
 
 ### Act 1 — `npm run demo:rogue`
 
-Agent submits a $50,000 BTC long without preapproval. The runtime
-intercepts **before** any effect lands in storage:
+Agent submits a $3,500 MacBook Pro 16″ purchase request without preapproval.
+The runtime intercepts **before** any effect lands in storage:
 
 ```
 HTTP 403
 {
   "error": "preapproval_denied",
-  "intentId": "agent_execute_preapproved_order",
+  "intentId": "agent_create_purchase_request",
   "reason": "no_preapproval",
   "details": {
     "entity": "AgentPreapproval",
@@ -122,33 +132,40 @@ stop, ask the human for a preapproval, retry.
 
 ### Act 2 — `npm run demo:grant`
 
-A human (acting as the `investor` role) issues:
+A human (acting as the `requester` role) issues:
 
-- `maxOrderAmount: $1,000`
+- `maxOrderAmount: $2,500`
+- `allowedCategories: hardware, office, supplies`
 - `dailyLimit: $5,000`
-- `allowedAssetTypes: crypto, stocks`
-- `expiresAt: +7 days`
+- `expiresAt: +30 days`
 
 That's one effect in Φ. No new endpoint. No middleware change. The
 intent `delegate_to_agent` is part of the same artifact the agent
 reads — and from this moment, the preapproval guard has a row to
-evaluate against.
+evaluate against. Below the auto-approval threshold ($2,500), the
+agent's request becomes `auto_approved` immediately. Above it (or
+outside category scope) — manual review or rejection.
 
 ### Act 3 — `npm run demo:smart`
 
 ```
 Found preapproval (id=pa_…):
-  active:           true
-  maxOrderAmount:   $1000
-  dailyLimit:       $5000
+  active:             true
+  maxOrderAmount:     $2500
+  dailyLimit:         $5000
+  allowedCategories:  hardware, office, supplies
 
-Desired:  0.5 BTC × $100000 = $50000
-Cap:      maxOrderAmount = $1000
-Decision: scale down to 0.0095 BTC = $950.00
+Desired:  "MacBook Pro 16\" M4 Max" at $3500
+Cap:      maxOrderAmount = $2500
+Decision: $3500 > $2500 → swap to "MacBook Air 15\" M3" at $2400
 
 HTTP 200
-{ "status": "confirmed", ... }
+{ "status": "confirmed", "result": { "request": { ..., "status": "auto_approved" } } }
 ```
+
+Bonus: the same script then attempts a $25,000 server with the same
+preapproval — and gets a structured `failedCheck: "maxAmount"` rejection.
+**One declarative guard. Different inputs, different outcomes.**
 
 The agent didn't bump into a wall. **It read the wall, walked around
 it, and did exactly what was permitted.** No special agent code. The
@@ -161,19 +178,19 @@ consumed by every reader.
 ## Connect this to Claude Desktop
 
 Once `docker compose up` is running, point Claude Desktop at the
-already-bootstrapped invest domain.
+already-bootstrapped procurement domain.
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
-    "invest": {
+    "procurement": {
       "command": "npx",
       "args": ["-y", "@intent-driven/mcp-server"],
       "env": {
         "IDF_SERVER": "http://localhost:3001",
-        "IDF_DOMAIN": "invest",
+        "IDF_DOMAIN": "procurement",
         "IDF_BOOTSTRAP": "0"
       }
     }
@@ -183,7 +200,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 Note `IDF_BOOTSTRAP=0` — the Docker container already bootstrapped the
 domain, so the MCP server can skip that step (no `IDF_ONTOLOGY_PATH`
-needed). Restart Claude Desktop. In the **Tools** menu, all 6
+needed). Restart Claude Desktop. In the **Tools** menu, the four
 agent-callable intents will appear, each tool description carrying:
 
 - `intent.description` — what the action is
@@ -249,7 +266,7 @@ docker compose logs idf-host
 ```
 
 Most common cause: the upstream `idf` repo changed its on-disk layout
-and `/opt/idf/src/domains/invest/{ontology,intents}.js` no longer
+and `/opt/idf/src/domains/procurement/{ontology,intents}.js` no longer
 exists. Pin to a known-good commit (see above) and report the issue.
 
 ### Claude Desktop doesn't show the tools
@@ -259,9 +276,9 @@ exists. Pin to a known-good commit (see above) and report the issue.
 2. Quit Claude Desktop **completely** (⌘Q, not just close window) and
    relaunch — config is read at startup only.
 3. Check Claude Desktop logs:
-   `~/Library/Logs/Claude/mcp-server-invest.log`
+   `~/Library/Logs/Claude/mcp-server-procurement.log`
 4. Verify the MCP server can reach the runtime:
-   `npx -y @intent-driven/mcp-server --domain=invest --no-bootstrap`
+   `npx -y @intent-driven/mcp-server --domain=procurement --no-bootstrap`
    (should connect, fetch schema, exit).
 
 ### Want to run without Docker (advanced)
@@ -280,10 +297,12 @@ Dockerfile              # Single-image build: clones IDF host + bootstrap
 docker-compose.yml      # One service, one port, one healthcheck
 docker/entrypoint.sh    # Boots host, bootstraps domain, prints next-step banner
 scripts/
-  demo-rogue-agent.mjs  # Act 1 — $50K rejected with structured 403
-  demo-grant-preapproval.mjs   # Act 2 — investor delegates with $1K cap
-  demo-smart-agent.mjs  # Act 3 — agent reads cap, scales, executes
-  show-description.mjs  # Print verbatim agent-facing tool descriptions
+  bootstrap-procurement.mjs   # Manual bootstrap (when not using Docker)
+  demo-rogue-procurement.mjs  # Act 1 — $3,500 MacBook rejected with structured 403
+  demo-grant-procurement.mjs  # Act 2 — requester delegates with $2,500 cap
+  demo-smart-procurement.mjs  # Act 3 — agent reads cap, downsizes, executes (+ bonus $25k rejection)
+  show-description.mjs        # Print verbatim agent-facing tool descriptions
+legacy/invest-demo/           # Original trading-agent demo (npm run demo:legacy:*)
 claude_desktop_config.example.json
 ```
 
@@ -295,7 +314,7 @@ preapproval guards, and irreversibility primitives.
 
 ## Author your own domain (separate path)
 
-This quickstart runs a pre-built domain (`invest`). If you want to
+This quickstart runs a pre-built domain (`procurement`). If you want to
 declare **your own** entities / intents / invariants and have Fold serve
 them, that's a different project — the IDF SDK.
 

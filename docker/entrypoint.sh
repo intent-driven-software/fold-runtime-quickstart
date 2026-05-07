@@ -9,7 +9,7 @@ set -euo pipefail
 
 PORT="${PORT:-3001}"
 BOOT_TIMEOUT="${HOST_BOOT_TIMEOUT_SECS:-30}"
-DOMAIN="${BOOTSTRAP_DOMAIN:-invest}"
+DOMAIN="${BOOTSTRAP_DOMAIN:-procurement}"
 LOG_FILE="/tmp/idf-host.log"
 
 echo "[fold-quickstart] starting IDF host on :${PORT}"
@@ -96,9 +96,9 @@ cat <<'BANNER'
   In a separate terminal:
     cd fold-runtime-quickstart
     npm install
-    npm run demo:rogue   # $50K trade → 403 with structured rejection
-    npm run demo:grant   # investor issues $1K cap
-    npm run demo:smart   # agent reads cap → scales → 200 OK
+    npm run demo:rogue   # agent tries $3500 MacBook Pro → 403 missing
+    npm run demo:grant   # requester issues $2500-cap preapproval
+    npm run demo:smart   # agent reads cap → $2400 MacBook Air → 200
 
   Or wire to Claude Desktop — see README §Claude Desktop integration.
 

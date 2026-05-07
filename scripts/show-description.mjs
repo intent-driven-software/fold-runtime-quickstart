@@ -4,14 +4,14 @@
  * какая семантика выводится автоматически из ONTOLOGY/INTENTS.
  *
  * Usage:
- *   IDF_SERVER=http://localhost:3001 IDF_DOMAIN=invest \
+ *   IDF_SERVER=http://localhost:3001 IDF_DOMAIN=procurement \
  *     node scripts/show-description.mjs
  */
 
 import { buildDescription } from "@intent-driven/mcp-server";
 
 const SERVER = process.env.IDF_SERVER || "http://localhost:3001";
-const DOMAIN = process.env.IDF_DOMAIN || "invest";
+const DOMAIN = process.env.IDF_DOMAIN || "procurement";
 const EMAIL = process.env.IDF_AGENT_EMAIL || "quickstart@local";
 const PASSWORD = process.env.IDF_AGENT_PASSWORD || "quickstart-password";
 

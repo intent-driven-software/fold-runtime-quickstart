@@ -1,11 +1,11 @@
 # Single-image quickstart: clones idf-host, installs deps, copies the
-# entrypoint that bootstraps the `invest` domain on first start.
+# entrypoint that bootstraps the `procurement` domain on first start.
 #
 # Pinned to the latest commit on main at build time. Rebuild to refresh.
 #
 # Resulting image runs:
 #   1. Express host on :3001
-#   2. POST /api/typemap?domain=invest + /api/intents?domain=invest
+#   2. POST /api/typemap?domain=procurement + /api/intents?domain=procurement
 #      (bootstrap of the demo domain) — once the host is up
 #   3. tail -f the host log so the container stays attached
 
@@ -51,7 +51,7 @@ EXPOSE 3001
 # Default env — overridable.
 ENV PORT=3001 \
     HOST_BOOT_TIMEOUT_SECS=30 \
-    BOOTSTRAP_DOMAIN=invest
+    BOOTSTRAP_DOMAIN=procurement
 
 HEALTHCHECK --interval=10s --timeout=3s --start-period=20s --retries=5 \
   CMD curl -fsS http://localhost:${PORT}/api/effects > /dev/null || exit 1

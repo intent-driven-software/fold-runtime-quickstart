@@ -1,10 +1,14 @@
 # Quickstart compose: один сервис idf-host с заранее bootstrap'нутым
-# invest-доменом. После `docker compose up` (~30 сек после билда):
+# procurement-доменом (corporate purchase requests + budget approval).
+# После `docker compose up` (~30 сек после билда):
 #
-#   curl http://localhost:3001/api/agent/invest/schema
-#   npm run demo:rogue
-#   npm run demo:grant
-#   npm run demo:smart
+#   curl http://localhost:3001/api/agent/procurement/schema
+#   npm run demo:rogue   # agent tries $3500 MacBook Pro → 403 missing
+#   npm run demo:grant   # requester issues $2500-cap preapproval
+#   npm run demo:smart   # agent reads cap → $2400 MacBook Air → 200
+#
+# Legacy invest demo доступен через `npm run demo:legacy:rogue/grant/smart`
+# (domain ещё в host'е, но bootstrap не запускается по умолчанию).
 #
 # IDF_REPO env var больше не нужен — bootstrap происходит внутри
 # контейнера entrypoint'ом.
@@ -27,7 +31,7 @@ services:
       - "${HOST_PORT:-3001}:3001"
     environment:
       - PORT=3001
-      - BOOTSTRAP_DOMAIN=invest
+      - BOOTSTRAP_DOMAIN=procurement
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:3001/api/effects"]

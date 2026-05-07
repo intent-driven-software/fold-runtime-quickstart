@@ -5,11 +5,15 @@
   "description": "Stop giving AI agents API keys. Give them a domain. Quickstart: Claude Desktop talks to a real declarative IDF runtime in 5 minutes.",
   "type": "module",
   "scripts": {
-    "bootstrap": "node scripts/bootstrap-invest.mjs",
+    "bootstrap": "node scripts/bootstrap-procurement.mjs",
     "show-description": "node scripts/show-description.mjs",
-    "demo:rogue": "node scripts/demo-rogue-agent.mjs",
-    "demo:grant": "node scripts/demo-grant-preapproval.mjs",
-    "demo:smart": "node scripts/demo-smart-agent.mjs"
+    "demo:rogue": "node scripts/demo-rogue-procurement.mjs",
+    "demo:grant": "node scripts/demo-grant-procurement.mjs",
+    "demo:smart": "node scripts/demo-smart-procurement.mjs",
+    "demo:legacy:bootstrap": "node legacy/invest-demo/bootstrap-invest.mjs",
+    "demo:legacy:rogue": "node legacy/invest-demo/demo-rogue-agent.mjs",
+    "demo:legacy:grant": "node legacy/invest-demo/demo-grant-preapproval.mjs",
+    "demo:legacy:smart": "node legacy/invest-demo/demo-smart-agent.mjs"
   },
   "dependencies": {
     "@intent-driven/mcp-server": "^1.0.0"
