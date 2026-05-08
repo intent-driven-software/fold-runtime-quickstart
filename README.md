@@ -96,6 +96,37 @@ When you're done: <kbd>Ctrl-C</kbd> in terminal 1, then `docker compose down`.
 
 ---
 
+## 15-minute walkthrough — timed
+
+If you want a step-by-step ride from a clean machine to a Claude Desktop
+chat that actually drives the runtime, follow this. We've timed it on a
+fresh M1 Macbook Air with Docker Desktop pre-installed; your numbers
+should be similar.
+
+| T+    | Step                                                                                                         | Success signal                                                                  |
+|-------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| 0:00  | `git clone https://github.com/intent-driven-software/fold-runtime-quickstart && cd fold-runtime-quickstart`  | `cd` succeeds                                                                   |
+| 0:30  | `docker compose up` (terminal 1)                                                                             | first run: image build starts (3-5 min); subsequent runs: ready in ~5 sec       |
+| 3:30  | While the image builds: `npm install` (terminal 2)                                                           | `node_modules/` populated                                                       |
+| 4:00  | Container says `fold-quickstart is ready`                                                                    | `curl http://localhost:3001/api/effects` returns JSON                           |
+| 4:30  | `npm run demo:rogue`                                                                                         | `HTTP 403` with `"error": "preapproval_denied"`                                 |
+| 5:00  | `npm run demo:grant`                                                                                         | `HTTP 200` — preapproval row created                                            |
+| 5:30  | `npm run demo:smart`                                                                                         | `HTTP 200` — agent scaled $50,000 → $950, executed                              |
+| 6:00  | `npx @intent-driven/cli@latest connect claude-desktop --domain invest --host http://localhost:3001`          | `✓ MCP-server entry "idf" written` to your Claude Desktop config                |
+| 6:30  | `npx @intent-driven/cli@latest doctor --ping http://localhost:3001`                                          | All ✓ (warnings on missing API key are fine if you only use Claude Desktop)     |
+| 7:00  | Quit Claude Desktop **completely** (⌘Q), relaunch                                                            | Tools menu shows the IDF intents (6 in the `invest` demo)                       |
+| 8:00  | Ask Claude Desktop: *"List my open positions in the invest domain."*                                         | Claude calls `agent_read_positions` — returns the seed positions                |
+| 10:00 | Ask: *"Open a $50,000 BTC long for me."*                                                                     | Claude calls `agent_execute_preapproved_order`, gets `403 preapproval_denied`, explains in plain English |
+| 12:00 | Ask: *"Issue a $1,000 preapproval for me as the investor."* (you'll need to switch role; see Connect section)| Preapproval row created; Claude confirms                                        |
+| 15:00 | Ask: *"Now try the BTC order again."*                                                                        | Claude scales the order to ~$950 and executes — same path the demo script took  |
+
+If you fall off track at any step, run `npx @intent-driven/cli@latest
+doctor` — it diagnoses the most common issues (Claude Desktop config
+missing, host runtime not responding, etc.) and prints the exact next
+command.
+
+---
+
 ## What just happened
 
 ### Act 1 — `npm run demo:rogue`
