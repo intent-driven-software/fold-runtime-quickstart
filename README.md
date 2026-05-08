@@ -87,12 +87,27 @@ docker compose up
 
 # Terminal 2 — run the demo
 npm install
-npm run demo:rogue   # Act 1: agent tries $50,000 — gets HTTP 403 with structured rejection
-npm run demo:grant   # Act 2: investor issues $1,000-cap preapproval (one declarative effect)
-npm run demo:smart   # Act 3: agent reads the cap, scales the order, executes 200 OK
+
+# === Infra demo (4 acts) — Fold-демо «9 seconds. Why agents wipe databases» ===
+IDF_REPO=$HOME/WebstormProjects/idf npm run bootstrap   # publish infra ontology
+npm run demo:1   # Act 1: ontology evolution → all 4 materializations rebuild
+npm run demo:2   # Act 2: scope filter → staging-agent физически не видит production
+npm run demo:3   # Act 3: human-approval → delete/pending/approve через REST
+npm run demo:4   # Act 4: forensics → state.at + diff (no backup needed)
+
+# === Invest demo (3 acts, financial preapproval) — secondary ===
+npm run demo:rogue   # Act 1: agent tries $50,000 — HTTP 403 structured rejection
+npm run demo:grant   # Act 2: investor issues $1,000-cap preapproval
+npm run demo:smart   # Act 3: agent scales the order, executes 200 OK
 ```
 
 When you're done: <kbd>Ctrl-C</kbd> in terminal 1, then `docker compose down`.
+
+> **Note:** The `infra` demo (4 acts) is the canonical Fold scenario — it
+> recreates the **PocketOS Cursor incident** as a working domain, then shows
+> all four architectural defenses. The `invest` demo (3 acts) is a smaller
+> financial-preapproval scenario from the original launch. Both run against
+> the same host runtime; pick one based on the audience.
 
 ---
 
