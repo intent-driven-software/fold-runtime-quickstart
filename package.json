@@ -5,8 +5,13 @@
   "description": "Stop giving AI agents API keys. Give them a domain. Quickstart: Claude Desktop talks to a real declarative IDF runtime in 5 minutes.",
   "type": "module",
   "scripts": {
-    "bootstrap": "node scripts/bootstrap-invest.mjs",
+    "bootstrap": "node scripts/bootstrap-infra.mjs",
+    "bootstrap:invest": "node scripts/bootstrap-invest.mjs",
     "show-description": "node scripts/show-description.mjs",
+    "demo:1": "node scripts/demo-1-evolve-ontology.mjs",
+    "demo:2": "node scripts/demo-2-scope-filter.mjs",
+    "demo:3": "node scripts/demo-3-approval-flow.mjs",
+    "demo:4": "node scripts/demo-4-forensics.mjs",
     "demo:rogue": "node scripts/demo-rogue-agent.mjs",
     "demo:grant": "node scripts/demo-grant-preapproval.mjs",
     "demo:smart": "node scripts/demo-smart-agent.mjs"
