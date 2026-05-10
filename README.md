@@ -6,6 +6,14 @@
 
 **Stop giving AI agents API keys. Give them a domain.**
 
+**Fold** — agent governance runtime. MCP-сервер (stdio adapter, slot-in для
+Claude Desktop / Cursor / Zed) перед runtime-сервисом, который sibling к
+реальному backend'у — не middleware и не proxy.
+
+Fold решает 4 задокументированные боли AI-агентов: scope (`role.base`),
+preapproval, approval-lifecycle, irreversibility. Полный pitch —
+[`idf-mcp/docs/what-is-fold.md`](https://github.com/intent-driven-software/idf-mcp/blob/main/docs/what-is-fold.md).
+
 Two-command quickstart: real Claude / GPT / Gemini agent talking to a real
 declarative IDF domain. No mocks. No code-generated boilerplate. You'll
 watch one agent **try to wire $50,000** to a wallet — and another agent,
@@ -55,12 +63,11 @@ guardrail layer that reviews after the fact. You want the system itself
 to refuse the wrong action — before the call, with a structured reason
 the agent can read.
 
-**How it plugs in.** Fold is a sibling service over an HTTP API the
-runtime exposes from your IDF artifact — not middleware in your existing
-app, not codegen at runtime. Your current backend stays where it is; the
-IDF artifact *describes* the agent-facing surface, and the runtime serves
-it on its own port. The MCP server is a stdio adapter Claude Desktop /
-Cursor / Zed connect to.
+**How it plugs in.** Fold is an MCP server (stdio adapter, slot-in for
+Claude Desktop / Cursor / Zed) in front of a runtime service that is
+*sibling* to your real backend — not middleware, not a proxy. Your
+current backend stays where it is; the IDF artifact *describes* the
+agent-facing surface, and the runtime serves it on its own port.
 
 ---
 
